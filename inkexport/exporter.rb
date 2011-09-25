@@ -4,12 +4,20 @@ module Inkexport
 # An exporter class that exports PNG from target elements.
 #
 class Exporter
-	INKSCAPE = '/Applications/Inkscape.app/Contents/Resources/bin/inkscape'
 	DPI_MAP = {90 => '', 180 => '@2x'}
 	FILE_EXT = '.png'
 
-	def initialize(path)
+	def initialize(inkscape_path, path)
+		@inkscape_path = inkscape_path
 		@path = path
+	end
+
+	def find_inkscape()
+		which_result = `which ruby`.chomp()
+		if which_result != nil
+			return which_result
+		end
+
 	end
 
 	def export(id, export_path, dpi)
@@ -18,7 +26,7 @@ class Exporter
 		args << "--export-id=#{id}"
 		args << "--export-dpi=#{dpi}"
 		args << "--export-png=#{export_path}"
-		p `#{INKSCAPE} #{args.join(' ')}`
+		p "#{@inkscape_path} #{args.join(' ')}"
 	end
 	private :export
 

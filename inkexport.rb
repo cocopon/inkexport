@@ -1,16 +1,30 @@
 #!/usr/bin/ruby
 
+require 'optparse'
 require './inkexport/exporter'
 require './inkexport/extractor'
 
-if ARGV.length() == 0
-	puts 'Usage: inkexport.rb [file]'
-else
-	path = ARGV[0]
-	extractor = Inkexport::Extractor.new(path)
-	targets = extractor.extract()
-
-	exporter = Inkexport::Exporter.new(path)
-	exporter.export_targets(targets)
+# TODO: Create a Inkscape finder class
+inkscape_path = `which inkscape`
+if inkscape_path.empty?()
+	inkscape_path = '/Applications/Inkscape.app/Contents/Resources/bin/inkscape'
 end
+
+input_path = nil
+
+opt = OptionParser.new()
+opt.on('--inkscape=<path>', 'Inkscape used to extract') {|v| inkscape_path = v}
+opt.on('-f', '--file=<path>', 'Input file') {|v| input_path = v}
+argv = opt.parse!(ARGV)
+
+if input_path == nil
+	puts opt.help()
+	exit()
+end
+
+extractor = Inkexport::Extractor.new(input_path)
+targets = extractor.extract()
+
+exporter = Inkexport::Exporter.new(inkscape_path, input_path)
+exporter.export_targets(targets)
 
