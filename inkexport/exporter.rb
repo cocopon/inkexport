@@ -26,7 +26,7 @@ class Exporter
 		args << "--export-id=#{id}"
 		args << "--export-dpi=#{dpi}"
 		args << "--export-png=#{export_path}"
-		p "#{@inkscape_path} #{args.join(' ')}"
+		p `#{@inkscape_path} #{args.join(' ')}`
 	end
 	private :export
 
