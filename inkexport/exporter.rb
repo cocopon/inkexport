@@ -4,20 +4,31 @@ module Inkexport
 # An exporter class that exports PNG from target elements.
 #
 class Exporter
-	DPI_MAP = {90 => '', 180 => '@2x'}
+	DEFAULT_ACTUAL_DPI = 90
 	FILE_EXT = '.png'
 
 	def initialize(inkscape_path, path)
 		@inkscape_path = inkscape_path
 		@path = path
+		self.actual_dpi = DEFAULT_ACTUAL_DPI
 	end
 
-	def find_inkscape()
-		which_result = `which ruby`.chomp()
-		if which_result != nil
-			return which_result
-		end
+	def actual_dpi()
+		return @actual_dpi
+	end
 
+	def actual_dpi=(actual_dpi)
+		@actual_dpi = actual_dpi
+		build_dpi_map()
+	end
+
+	def build_dpi_map()
+		@dpi_map = {@actual_dpi => ''}
+
+		other_scales = [2]
+		other_scales.each do |scale|
+			@dpi_map[@actual_dpi * scale] = "@#{scale}x"
+		end
 	end
 
 	def export(id, export_path, dpi)
@@ -36,7 +47,7 @@ class Exporter
 			return
 		end
 
-		DPI_MAP.each do |dpi, file_postfix|
+		@dpi_map.each do |dpi, file_postfix|
 			export_path = file_name + file_postfix + FILE_EXT
 
 			target_id = target.attributes['id']

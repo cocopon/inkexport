@@ -10,10 +10,12 @@ if inkscape_path.empty?()
 	inkscape_path = '/Applications/Inkscape.app/Contents/Resources/bin/inkscape'
 end
 
+actual_dpi = nil
 input_path = nil
 
 opt = OptionParser.new()
 opt.on('--inkscape=<path>', 'Inkscape used to extract') {|v| inkscape_path = v}
+opt.on('--actual-dpi=<dpi>', 'Actual DPI of @1x image') {|v| actual_dpi = v}
 opt.on('-f', '--file=<path>', 'Input file') {|v| input_path = v}
 argv = opt.parse!(ARGV)
 
@@ -26,5 +28,8 @@ extractor = Inkexport::Extractor.new(input_path)
 targets = extractor.extract()
 
 exporter = Inkexport::Exporter.new(inkscape_path, input_path)
+if actual_dpi != nil
+	exporter.actual_dpi = actual_dpi.to_i()
+end
 exporter.export_targets(targets)
 
