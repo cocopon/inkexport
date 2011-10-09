@@ -7,9 +7,12 @@ class Exporter
 	DEFAULT_ACTUAL_DPI = 90
 	FILE_EXT = '.png'
 
-	def initialize(inkscape_path, path)
+	attr_accessor :output_dir
+
+	def initialize(inkscape_path, svg_path)
 		@inkscape_path = inkscape_path
-		@path = path
+		@svg_path = svg_path
+		@output_dir = '.'
 		self.actual_dpi = DEFAULT_ACTUAL_DPI
 	end
 
@@ -33,11 +36,11 @@ class Exporter
 
 	def export(id, export_path, dpi)
 		args = []
-		args << @path
+		args << @svg_path
 		args << "--export-id=#{id}"
 		args << "--export-dpi=#{dpi}"
 		args << "--export-png=#{export_path}"
-		p `#{@inkscape_path} #{args.join(' ')}`
+		puts `#{@inkscape_path} #{args.join(' ')}`
 	end
 	private :export
 
@@ -48,7 +51,7 @@ class Exporter
 		end
 
 		@dpi_map.each do |dpi, file_postfix|
-			export_path = file_name + file_postfix + FILE_EXT
+			export_path = File.join(@output_dir, file_name + file_postfix + FILE_EXT)
 
 			target_id = target.attributes['id']
 			export(target_id, export_path, dpi)
