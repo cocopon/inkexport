@@ -1,8 +1,11 @@
 #!/usr/bin/ruby
 
 require 'optparse'
-require './inkexport/exporter'
-require './inkexport/extractor'
+
+script_dir = File.dirname(File.expand_path(__FILE__))
+require File.join(script_dir, 'inkexport/exporter')
+require File.join(script_dir, 'inkexport/extractor')
+
 
 # TODO: Create an Inkscape finder class
 inkscape_path = `which inkscape`
