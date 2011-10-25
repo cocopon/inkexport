@@ -1,5 +1,9 @@
 module Inkexport
 
+# TODO: Re-arrange directory structure
+script_dir = File.dirname(File.expand_path(__FILE__))
+require File.join(script_dir, 'path')
+
 #
 # An exporter class that exports PNG from target elements.
 #
@@ -10,7 +14,7 @@ class Exporter
 	attr_accessor :output_dir
 
 	def initialize(inkscape_path, svg_path)
-		@inkscape_path = inkscape_path
+		@inkscape_path = BashPath.escape(inkscape_path)
 		@svg_path = svg_path
 		@output_dir = '.'
 		self.actual_dpi = DEFAULT_ACTUAL_DPI
@@ -36,10 +40,10 @@ class Exporter
 
 	def export(id, export_path, dpi)
 		args = []
-		args << @svg_path
+		args << "#{BashPath.escape(@svg_path)}"
 		args << "--export-id=#{id}"
 		args << "--export-dpi=#{dpi}"
-		args << "--export-png=#{export_path}"
+		args << "--export-png=#{BashPath.escape(export_path)}"
 		puts `#{@inkscape_path} #{args.join(' ')}`
 	end
 	private :export
