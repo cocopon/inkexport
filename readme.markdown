@@ -21,5 +21,5 @@ Run
 
 Open a terminal, and run the command as follows.
 
-	$ ./inkexport.rb -f [SVG file]
+	$ inkexport -f [SVG file] -o [output dir]
 

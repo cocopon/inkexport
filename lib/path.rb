@@ -1,3 +1,5 @@
+module Inkexport
+
 # TODO: Support other environment
 class BashPath
 	def BashPath.compatible?(shell)
@@ -15,3 +17,4 @@ class BashPath
 	end
 end
 
+end

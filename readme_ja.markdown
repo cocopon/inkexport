@@ -21,5 +21,5 @@ SVGファイルにわずかな付加情報を追記することで、Retina対�
 
 以下のコマンドを実行してください。
 
-	$ ./inkexport.rb -f [SVGファイル]
+	$ inkexport -f [SVGファイル] -o [出力先ディレクトリ]
 

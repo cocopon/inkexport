@@ -1,8 +1,6 @@
 module Inkexport
 
-# TODO: Re-arrange directory structure
-script_dir = File.dirname(File.expand_path(__FILE__))
-require File.join(script_dir, 'path')
+require File.join(ROOT_DIR, 'path')
 
 #
 # An exporter class that exports PNG from target elements.
