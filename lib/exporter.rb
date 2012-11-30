@@ -12,7 +12,7 @@ class Exporter
 	attr_accessor :output_dir
 
 	def initialize(inkscape_path, svg_path)
-		@inkscape_path = BashPath.escape(inkscape_path)
+		@inkscape_path = Path.escape(inkscape_path)
 		@svg_path = svg_path
 		@output_dir = '.'
 		self.actual_dpi = DEFAULT_ACTUAL_DPI
@@ -38,10 +38,10 @@ class Exporter
 
 	def export(id, export_path, dpi)
 		args = []
-		args << "#{BashPath.escape(@svg_path)}"
+		args << "#{Path.escape(@svg_path)}"
 		args << "--export-id=#{id}"
 		args << "--export-dpi=#{dpi}"
-		args << "--export-png=#{BashPath.escape(export_path)}"
+		args << "--export-png=#{Path.escape(export_path)}"
 		puts `#{@inkscape_path} #{args.join(' ')}`
 	end
 	private :export

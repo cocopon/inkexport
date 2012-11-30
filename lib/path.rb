@@ -1,12 +1,7 @@
 module Inkexport
 
-# TODO: Support other environment
-class BashPath
-	def BashPath.compatible?(shell)
-		return /bash/ =~ shell
-	end
-
-	def BashPath.escape(path)
+class Path
+	def self.escape(path)
 		if path[0..1] == '"'
 			return path
 		end
