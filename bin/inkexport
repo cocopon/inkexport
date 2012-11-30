@@ -1,6 +1,20 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
-require File.join(File.dirname(__FILE__), '../lib/inkexport')
 
-Inkexport::EntryPoint.run()
+module Inkexport
 
+
+def self.require_local(namespace)
+	comps = [File.dirname(__FILE__), '..'].concat(namespace.split('.'))
+	p File.expand_path(File.join(comps))
+	require File.expand_path(File.join(comps))
+end
+
+
+self.require_local('lib.entrypoint')
+
+
+EntryPoint.run()
+
+
+end

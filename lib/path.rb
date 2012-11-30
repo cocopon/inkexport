@@ -1,5 +1,6 @@
 module Inkexport
 
+
 class Path
 	def self.escape(path)
 		if path[0..1] == '"'
@@ -11,5 +12,6 @@ class Path
 		return "\"#{escaped_path}\""
 	end
 end
+
 
 end

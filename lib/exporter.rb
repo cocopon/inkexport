@@ -1,6 +1,8 @@
 module Inkexport
 
-require File.join(ROOT_DIR, 'path')
+
+self.require_local('lib.path')
+
 
 #
 # An exporter class that exports PNG from target elements.

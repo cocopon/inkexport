@@ -4,6 +4,7 @@ include REXML
 
 module Inkexport
 
+
 # 
 # An extractor class that extracts target elements from a SVG file.
 #
@@ -29,5 +30,6 @@ class Extractor
 		return targets
 	end
 end
+
 
 end

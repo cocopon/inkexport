@@ -1,11 +1,13 @@
 module Inkexport
 
+
 require 'optparse'
-require File.join(ROOT_DIR, 'exporter')
-require File.join(ROOT_DIR, 'extractor')
+self.require_local('lib.exporter')
+self.require_local('lib.extractor')
+
 
 class EntryPoint
-	def EntryPoint.run()
+	def self.run()
 		# TODO: Create an Inkscape finder class
 		inkscape_path = `which inkscape`
 		if inkscape_path.empty?()
@@ -25,7 +27,7 @@ class EntryPoint
 
 		if input_path == nil
 			puts opt.help()
-			exit()
+			exit
 		end
 
 		extractor = Extractor.new(input_path)
@@ -38,5 +40,6 @@ class EntryPoint
 		exporter.export_targets(targets)
 	end
 end
+
 
 end
