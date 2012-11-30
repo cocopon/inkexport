@@ -1,12 +1,10 @@
+Inkexport.require_local('lib.path')
+
+
 module Inkexport
 
 
-self.require_local('lib.path')
-
-
-#
 # An exporter class that exports PNG from target elements.
-#
 class Exporter
 	DEFAULT_ACTUAL_DPI = 90
 	FILE_EXT = '.png'
@@ -38,6 +36,18 @@ class Exporter
 		end
 	end
 
+	# Exports PNGs using specified elements.
+	#
+	# @param [Array<REXML::Element>] targets
+	# The array of target elements to export
+	def export_targets(targets)
+		targets.each do |target|
+			export_target(target)
+		end
+	end
+
+	private
+
 	def export(id, export_path, dpi)
 		args = []
 		args << "#{Path.escape(@svg_path)}"
@@ -46,7 +56,6 @@ class Exporter
 		args << "--export-png=#{Path.escape(export_path)}"
 		puts `#{@inkscape_path} #{args.join(' ')}`
 	end
-	private :export
 
 	def export_target(target)
 		file_name = target.attributes['inkscape:label']
@@ -59,19 +68,6 @@ class Exporter
 
 			target_id = target.attributes['id']
 			export(target_id, export_path, dpi)
-		end
-	end
-	private :export_target
-
-	# 
-	# Exports PNGs using specified elements.
-	#
-	# @param [Array<REXML::Element>] targets
-	# The array of target elements to export
-	# 
-	def export_targets(targets)
-		targets.each do |target|
-			export_target(target)
 		end
 	end
 end
