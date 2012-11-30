@@ -8,7 +8,7 @@ Prepare - Inkscape
 ------------------
 
 1. Run Inkscape, and create SVG file.
-2. Add `export' layer for export.
+2. Add `export` layer for export.
 3. Add rectangles to `export` layer as export area.
 4. Select a rectangle, and choose `Object > Object Properties`.
 5. Input an export file name to `Label` field, except file extension.
