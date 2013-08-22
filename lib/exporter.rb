@@ -12,7 +12,7 @@ class Exporter
 	attr_accessor :output_dir
 
 	def initialize(inkscape_path, svg_path)
-		@inkscape_path = Path.escape(inkscape_path)
+		@inkscape_path = inkscape_path
 		@svg_path = svg_path
 		@output_dir = '.'
 		self.actual_dpi = DEFAULT_ACTUAL_DPI

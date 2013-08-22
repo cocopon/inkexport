@@ -17,13 +17,25 @@ end
 require 'optparse'
 Inkexport.require_local('lib.exporter')
 Inkexport.require_local('lib.extractor')
+Inkexport.require_local('lib.path')
 
+
+require 'rbconfig'
+is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 
 # TODO: Create an Inkscape finder class
-inkscape_path = `which inkscape`
+if is_windows
+	puts 'running in cygwin'
+	inkscape_path = `which inkscape.exe`
+else 
+	inkscape_path = `which inkscape`
+end
 if inkscape_path.empty?()
 	inkscape_path = '/Applications/Inkscape.app/Contents/Resources/bin/inkscape'
 end
+
+inkscape_path = Inkexport::Path.escape(inkscape_path, !is_windows)
+puts "Inkscape:" + inkscape_path
 
 actual_dpi = nil
 input_path = nil
@@ -43,6 +55,8 @@ end
 
 extractor = Inkexport::Extractor.new(input_path)
 targets = extractor.extract()
+
+puts 'exporting targets :' + targets.map { |i| "'" + i.to_s + "'" }.join(",\n")
 
 exporter = Inkexport::Exporter.new(inkscape_path, input_path)
 exporter.actual_dpi = actual_dpi.to_i() if actual_dpi != nil
